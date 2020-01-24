@@ -19,7 +19,17 @@
 				"command": "extension.openRandomFile",
 				"title": "Open random file"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Open random file",
+			"properties": {
+				"openRandomFile.pathShouldInclude": {
+					"type": "array",
+					"default": [],
+					"description": "Array of words that paths should contain in order to be opened"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

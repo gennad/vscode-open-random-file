@@ -4,10 +4,25 @@ import * as vscode from 'vscode';
 
 async function openRandomFile() {
     const files = await vscode.workspace.findFiles('**/*');
+        
+    const extensionConfig = vscode.workspace.getConfiguration();
+    const paths = extensionConfig.get('openRandomFile.pathShouldInclude') as Array<string>;
 
     const filterFile = (element: vscode.Uri) => {
         // return !element.path.startsWith('node_modules');
-        return !element.path.includes('node_modules');
+
+        if (element.path.includes('node_modules')) return false;
+
+        if (paths.length === 0) {
+            return true;
+        }
+        
+        for (const path of paths) {
+            if (element.path.includes(path)) {
+                return true;
+            }
+        }
+        return false;
     };
 
     const passedFiles = files.filter(filterFile);
